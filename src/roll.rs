@@ -20,14 +20,14 @@ impl Display for SubRoll {
             "{} -> {} = {}",
             self.literal,
             self.values.iter().join(", "),
-            self.values.iter().sum::<i32>()
+            self.values.iter().sum::<i32>(),
         )
     }
 }
 
 #[derive(Debug)]
 pub struct Roll {
-    pub rolls: Vec<SubRoll>,
+    pub sub_rolls: Vec<SubRoll>,
     pub values: Vec<i32>,
 }
 
@@ -41,7 +41,7 @@ impl Roll {
     pub fn new(expr: &Expr) -> Roll {
         match expr {
             Expr::Integer(i) => Roll {
-                rolls: Vec::new(),
+                sub_rolls: Vec::new(),
                 values: vec![*i],
             },
             Expr::UnaryMinus(rhs) => {
@@ -72,7 +72,7 @@ impl Roll {
                     let mut left = Self::new(lhs);
                     let mut right = Self::new(rhs);
                     left.values = [left.values, right.values].concat();
-                    left.rolls.append(&mut right.rolls);
+                    left.sub_rolls.append(&mut right.sub_rolls);
                     left
                 },
 				Op::Repeat => {
@@ -81,7 +81,7 @@ impl Roll {
 					let repeat = left.sum();
 					for _ in 0..repeat.max(0) {
 						let mut right = Self::new(rhs);
-						left.rolls.append(&mut right.rolls);
+						left.sub_rolls.append(&mut right.sub_rolls);
 						values.append(&mut right.values);
 					}
 					left.values = values;
@@ -112,8 +112,8 @@ impl Roll {
 			values
 		};
 		left.values = values.clone();
-		left.rolls.append(&mut right.rolls);
-		left.rolls.push(SubRoll {
+		left.sub_rolls.append(&mut right.sub_rolls);
+		left.sub_rolls.push(SubRoll {
 			literal: format!("{}d{}", dice, faces),
 			values: values.clone(),
 		});
@@ -127,7 +127,7 @@ impl Roll {
     {
         let mut left = Self::new(lhs);
         let mut right = Self::new(rhs);
-        left.rolls.append(&mut right.rolls);
+        left.sub_rolls.append(&mut right.sub_rolls);
         left.values = o(left.values, right.sum(), f);
         left
     }
@@ -179,7 +179,7 @@ impl Roll {
         let mut left = Self::new(lhs);
         let mut right = Self::new(rhs);
         left.values = vec![f(left.sum(), right.sum())];
-        left.rolls.append(&mut right.rolls);
+        left.sub_rolls.append(&mut right.sub_rolls);
         left
     }
 
@@ -191,7 +191,7 @@ impl Roll {
         let mut values = Vec::new();
         for value in left.values.into_iter() {
             let mut right = Self::new(rhs);
-            left.rolls.append(&mut right.rolls);
+            left.sub_rolls.append(&mut right.sub_rolls);
             values.push(f(value, right.sum()))
         }
         left.values = values;

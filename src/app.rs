@@ -64,7 +64,7 @@ pub fn run() -> Result<()> {
 			let roll = dice.roll();
 
 			if *verbose {
-				for sub_roll in roll.rolls.iter() {
+				for sub_roll in roll.sub_rolls.iter() {
 					eprintln!("{}", sub_roll);
 				}
 			}
