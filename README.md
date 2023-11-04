@@ -9,16 +9,16 @@
 - [Tables](#tables)
 - [Flowers](#flowers)
 
-The OSR Helper is a set of tools and utilities to assist in running tabletop RPGs. Each of the following sections details a subcommand of the OSR Helper app.
+The OSR Helper is a set of tools and utilities to assist in running tabletop RPGs. Each of the following sections details a command of the OSR Helper app.
 
 # Dice
-Rolls dice
+The dice command rolls dice based on an expression.
 
 ## Basic Operators
 These do math, collecting totaled dice results for each side and performing an operation.
 - Addition `+`
 - Subtraction `-` 
-  - *Note: also works as unary to negate numbers*
+  - *Note: also works to negate numbers*
 - Multiplication `*`
 - Division `/`
 
@@ -58,11 +58,18 @@ Dice operations are for rolling and manipulating dice.
 
 ***NOTE***
 
-Keep and drop operations work with negative numbers.
+Dice operations work with negative numbers.
 
-e.g., `4d20kh-3` will roll four dice that have 20 sides and keep the lowest 3 results.
+- `-1d4` and `1d-4` will roll a negative number while `-1d-4` will result in a positive number.
+- `4d20kh-3` will roll four dice that have 20 sides and keep the lowest 3 results.
 
 ```
+-1d4 => -3
+
+1d-4 => -2
+
+-1d-4 => 4
+
 4d20kh-2 => {17, 10, 10, 2} kh -2 => 2, 10 
 ```
 
