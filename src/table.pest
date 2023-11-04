@@ -1,0 +1,44 @@
+text = @{ (ASCII_ALPHANUMERIC | "." | "_" | "/" | ",")+ }
+
+integer = @{ ASCII_DIGIT+ }
+
+document = _{ SOI ~ (section ~ NEWLINE*)* ~ EOI }
+
+section = _{ table_1 }
+
+table_1 = { header_1 ~ line_items+ ~ NEWLINE* ~ table_1_subtables? }
+table_1_subtables = { table_2+ }
+
+table_2 = { header_2 ~ line_items+ ~ NEWLINE* ~ table_2_subtables? }
+table_2_subtables = { table_3+ }
+
+table_3 = { header_3 ~ line_items+ ~ NEWLINE* ~ table_3_subtables? }
+table_3_subtables = { table_4+ }
+
+table_4 = { header_4 ~ line_items+ ~ NEWLINE* ~ table_4_subtables? }
+table_4_subtables = { table_5+ }
+
+table_5 = { header_5 ~ line_items+ ~ NEWLINE* ~ table_5_subtables? }
+table_5_subtables = { table_6+ }
+
+table_6 = { header_6 ~ line_items+ ~ NEWLINE* }
+
+
+header_1 = _{ "#" ~ header_title ~ NEWLINE* }
+header_2 = _{ "##" ~ header_title ~ NEWLINE* }
+header_3 = _{ "###" ~ header_title ~ NEWLINE* }
+header_4 = _{ "####" ~ header_title ~ NEWLINE* }
+header_5 = _{ "#####" ~ header_title ~ NEWLINE* }
+header_6 = _{ "######" ~ header_title ~ NEWLINE* }
+
+header_title = @{ (!(NEWLINE | "#") ~ ANY)+ }
+
+line_items = ${ (line_item ~ NEWLINE*)+ }
+line_item = { "- " ~ ("*" ~ weight ~ " ")? ~ (line_text | "[" ~ dice ~ "]" | "`" ~ section_link ~ "`")+ }
+line_text = @{ line_char+ }
+line_char = { !("[" | "`" | NEWLINE) ~ ANY }
+weight = @{ integer }
+dice= { (!("]") ~ ANY)+ }
+section_link = @{ (!"`" ~ ANY)+ }
+
+WHITESPACE = _{ " " }

@@ -1,0 +1,33 @@
+// No whitespace allowed between digits
+integer = @{ ASCII_DIGIT+ }
+
+unary_minus = { "-" }
+collect = { "=" }
+primary = _{ integer | "(" ~ expr ~ ")" }
+atom = _{ (unary_minus | collect)? ~ primary }
+
+bin_op = _{ add | subtract | multiply | divide | multi_add | multi_subtract | multi_multiply | multi_divide | dice | keep_high | keep_low | drop_high | drop_low | comma | repeat }
+	add = { "+" ~ !"+" }
+	subtract = { "-" ~ !"-" }
+	multiply = { "*" ~ !"*" }
+	divide = { "/" ~ !"/" }
+	multi_add = { "++" }
+	multi_subtract = { "--" }
+	multi_multiply = { "**" }
+	multi_divide  = { "//" }
+	dice = { "d" ~ !("h" | "l") }
+	keep_high = { "kh" }
+	keep_low = { "kl" }
+	drop_high = { "dh" }
+	drop_low = { "dl" }
+	comma = { "," }
+	repeat= { "@" }
+	
+
+expr = { atom ~ (bin_op ~ atom)* }
+
+// We can't have SOI and EOI on expr directly, because it is used
+// recursively (e.g. with parentheses)
+expression = _{ SOI ~ expr ~ EOI }
+
+WHITESPACE = _{ " " }
