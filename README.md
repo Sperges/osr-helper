@@ -1,6 +1,7 @@
 # OSR Helper
 
 - [OSR Helper](#osr-helper)
+	- [TODO](#todo)
 - [Dice](#dice)
 	- [Basic Operators](#basic-operators)
 	- [Multi Operators](#multi-operators)
@@ -9,7 +10,13 @@
 - [Tables](#tables)
 - [Flowers](#flowers)
 
-The OSR Helper is a set of tools and utilities to assist in running tabletop RPGs. Each of the following sections details a command of the OSR Helper app.
+The OSR Helper is a set of tools and utilities to assist in running tabletop RPGs.
+
+## TODO
+
+- Fix cylical tables
+- Trim table names
+
 
 # Dice
 The dice command rolls dice based on an expression.
