@@ -118,7 +118,7 @@ impl Dice {
             .parse(pairs)
     }
 
-    pub fn roll(&mut self) -> Roll {
+    pub fn roll(&self) -> Roll {
         Roll::new(&self.expr)
     }
 }

@@ -13,7 +13,7 @@
 
 ## Inhabited
 - *2 Empty
-- Inhabited
+- Inhabited (`Monsters`)
 
 # Man Made
 - *2 Ruins, `Inhabited`
@@ -23,7 +23,7 @@
 - Shrine, `Inhabited`
   
 ## Inhabited
-- *2 Inhabited
+- *2 Inhabited (`Monsters`)
 - Empty
 
 # Wondrous
@@ -31,7 +31,7 @@
 - Obelisk
 - Flowers
 - Cave
-- Pond/ Quicksand
+- Pond / Quicksand
 - Spring / Waterfall
 - Rift
 - Leyline
