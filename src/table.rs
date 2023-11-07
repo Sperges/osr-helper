@@ -319,6 +319,10 @@ impl Tables {
 		self.map.keys().choose(&mut thread_rng())
 	}
 
+	pub fn first_name(&self) -> Option<&String> {
+		self.map.keys().next()
+	}
+
     fn parse_tables(pairs: Pairs<Rule>) -> Result<Tables> {
         let mut map: HashMap<String, Table> = HashMap::new();
         for pair in pairs.into_iter() {
@@ -427,9 +431,9 @@ impl Tables {
                     LineItemSection::Dice(dice) => dice.roll().to_string(),
                     LineItemSection::Reference(reference) => {
 						if table.sub_tables.map.is_empty() {
-							self.roll_rec(self, reference, false, depth + 1)?
+							self.roll_rec(self, &reference, false, depth + 1)?
 						} else {
-							self.roll_rec(&table.sub_tables, reference, true, depth + 1)?
+							self.roll_rec(&table.sub_tables, &reference, true, depth + 1)?
 						}
 					},
                 })
