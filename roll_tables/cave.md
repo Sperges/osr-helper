@@ -2,9 +2,9 @@
 - Entrace; [=30d2]ft tunnel, `Size`
 
 # Size
-- large
-- medium
-- small
+- `Large`
+- `Medium`
+- `Small`
 
 ## Small
 - tunnel ends, `End Feature`
@@ -15,7 +15,7 @@
 
 ## Medium
 - tunnel ends, `End Feature`
-- *2 passage continues [30d2]ft.
+- *2 passage continues [=30d2]ft.
 - *2 chamber
 - *2 branching path
 - *2 passage continues, direction
@@ -24,7 +24,7 @@
 
 ## Large
 - tunnel ends, `End Feature`
-- *2 passage continues [30d2]ft.
+- *2 passage continues [=30d2]ft.
 - *4 chamber
 - *4 branching path
 - *2 passage continues, direction
