@@ -280,7 +280,7 @@ enum LineItemSection {
 struct LineItem {
     weight: i32,
     sections: Vec<LineItemSection>,
-    references: HashSet<String>,
+    _references: HashSet<String>,
 }
 
 #[derive(Debug)]
@@ -355,11 +355,11 @@ impl Tables {
         let line_items = Self::parse_line_items(
             &mut pairs.next().expect("table missing line items").into_inner(),
         )?;
-        for line_item in line_items.iter() {
-            if line_item.references.contains(&name) {
-                return Err(anyhow!("Table \"{}\" contains self reference", name));
-            }
-        }
+        // for line_item in line_items.iter() {
+        //     if line_item.references.contains(&name) {
+        //         return Err(anyhow!("Table \"{}\" contains self reference", name));
+        //     }
+        // }
         let sub_tables = if let Some(pair) = pairs.next() {
             Self::parse_tables(pair.into_inner())?
         } else {
@@ -402,7 +402,7 @@ impl Tables {
         Ok(LineItem {
             weight,
             sections,
-            references,
+            _references: references,
         })
     }
 
@@ -418,7 +418,7 @@ impl Tables {
         depth: usize,
     ) -> Result<String> {
         if depth == Self::MAX_DEPTH {
-            return Err(anyhow!("Max reference depth ({}) reached, last tables searched: {:#?}", Self::MAX_DEPTH, tables.map));
+            return Err(anyhow!("Max reference depth ({}) reached for table \"{}\", last tables searched: {:#?}", Self::MAX_DEPTH, table_name, tables.map));
         }
         if let Some(table) = tables.map.get(table_name) {
             let mut output: Vec<String> = Vec::new();
