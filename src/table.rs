@@ -300,6 +300,7 @@ struct Table {
 #[derive(Debug)]
 pub struct Tables {
     map: HashMap<String, Table>,
+    first_table: Option<String>,
 }
 
 impl Tables {
@@ -320,11 +321,13 @@ impl Tables {
 	}
 
 	pub fn first_name(&self) -> Option<&String> {
-		self.map.keys().next()
+		self.first_table.as_ref()
 	}
 
     fn parse_tables(pairs: Pairs<Rule>) -> Result<Tables> {
         let mut map: HashMap<String, Table> = HashMap::new();
+        let mut first_table: Option<String> = None;
+        let mut first = true;
         for pair in pairs.into_iter() {
             match pair.as_rule() {
                 Rule::table_1
@@ -334,6 +337,10 @@ impl Tables {
                 | Rule::table_5
                 | Rule::table_6 => {
                     let table = Self::parse_table(&mut pair.into_inner())?;
+                    if first {
+                        first_table = Some(table.name.clone());
+                        first = false
+                    }
                     if map.contains_key(&table.name) {
                         return Err(anyhow!("Duplicate table detected: \"{}\"", table.name));
                     } else {
@@ -343,7 +350,9 @@ impl Tables {
                 _ => {}
             }
         }
-        Ok(Tables { map })
+
+        Ok(Tables { map, first_table })
+        
     }
 
     fn parse_table(pairs: &mut Pairs<Rule>) -> Result<Table> {
@@ -365,6 +374,7 @@ impl Tables {
         } else {
             Tables {
                 map: HashMap::new(),
+                first_table: None,
             }
         };
         Ok(Table {

@@ -14,7 +14,8 @@ The OSR Helper is a set of tools and utilities to assist in running tabletop RPG
 
 ## TODO
 
-- Fix cylical tables
+- add table files / flowers to table
+- support multi line table elements
 - Trim table names
 
 
