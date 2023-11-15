@@ -33,12 +33,14 @@ header_6 = _{ "######" ~ header_title ~ NEWLINE* }
 
 header_title = @{ (!(NEWLINE | "#") ~ ANY)+ }
 
-line_items = ${ (line_item ~ NEWLINE*)+ }
-line_item = { "- " ~ ("*" ~ weight ~ " ")? ~ (line_text | "[" ~ dice ~ "]" | "`" ~ section_link ~ "`")+ }
+comment = _{ "//" ~ (!NEWLINE ~ ANY) }
+
+line_items = ${ ((line_item | comment) ~ NEWLINE*)+ }
+line_item = { "- " ~ ("*" ~ weight ~ " ")? ~ (line_text | "`" ~ dice ~ "`" | "[" ~ section_link ~ "]")+ }
 line_text = @{ line_char+ }
 line_char = { !("[" | "`" | NEWLINE) ~ ANY }
 weight = @{ integer }
-dice= { (!("]") ~ ANY)+ }
-section_link = @{ (!"`" ~ ANY)+ }
+dice= { (!("`") ~ ANY)+ }
+section_link = @{ (!"]" ~ ANY)+ }
 
 WHITESPACE = _{ " " }
