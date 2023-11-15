@@ -202,5 +202,3 @@ impl Roll {
         self.values.iter().sum::<i32>()
     }
 }
-
-
