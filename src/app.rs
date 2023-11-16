@@ -126,7 +126,7 @@ pub fn run() -> Result<()> {
                 flowers_path,
                 ron::ser::to_string::<HashMap<String, String>>(&flowers)?,
             )?;
-        }
+        },
         None => {}
     }
     Ok(())

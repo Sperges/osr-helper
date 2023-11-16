@@ -1,3 +1,5 @@
+use std::fmt::{Display, self};
+
 use anyhow::Result;
 use pest::{pratt_parser::PrattParser, Parser, iterators::Pairs};
 
@@ -36,6 +38,17 @@ pub enum Expr {
     },
 }
 
+impl Display for Expr {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Expr::Integer(i) => write!(f, "{}", i),
+            Expr::UnaryMinus(expr) => write!(f, "{}", expr),
+            Expr::Collect(expr) => write!(f, "{}", expr),
+            Expr::BinOp { lhs, op, rhs } => write!(f, "{}{}{}", lhs, op, rhs),
+        }
+    }
+}
+
 #[derive(Debug)]
 pub enum Op {
     Add,
@@ -55,6 +68,28 @@ pub enum Op {
 	Repeat,
 }
 
+impl Display for Op {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Op::Add => write!(f, "+"),
+            Op::Subtract => write!(f, "-"),
+            Op::Multiply => write!(f, "*"),
+            Op::Divide => write!(f, "/"),
+            Op::MultiAdd => write!(f, "++"),
+            Op::MultiSubtract => write!(f, "--"),
+            Op::MultiMultiply => write!(f, "**"),
+            Op::MultiDivide => write!(f, "//"),
+            Op::Dice => write!(f, "d"),
+            Op::KeepHighest => write!(f, "kh"),
+            Op::KeepLowest => write!(f, "kl"),
+            Op::DropHighest => write!(f, "dh"),
+            Op::DropLowest => write!(f, "dl"),
+            Op::Comma => write!(f, ","),
+            Op::Repeat => write!(f, "@"),
+        }
+    }
+}
+
 #[derive(Debug)]
 pub struct Dice {
     pub literal: String,
@@ -62,6 +97,13 @@ pub struct Dice {
 }
 
 impl Dice {
+	pub fn _new(expr: Expr) -> Dice {
+		Dice {
+			literal: format!("{}", expr),
+			expr,
+		}
+	}
+
     pub fn parse<'i>(expression: &'i str) -> Result<Dice> {
         let expr = Self::expr(&expression)?;
         Ok(Dice {

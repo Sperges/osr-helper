@@ -12,8 +12,8 @@
 # Small
 - tunnel ends, [End]
 - *2 [Tunnel]. [Small]
-- *2 [Chamber]. [Small]
-- *2 branch.
+- *2 [Chamber].
+- *2 branch:
 - [Direction]. [Small]
 
 ## Chamber
@@ -39,7 +39,7 @@
 - dungeon entrance, [Dungeon Entrance]
 
 # Tunnel
-- tunnel `=30d2`ft. [Width]
+- tunnel `=(1d3*10)+20`ft. [Width]
 
 ## Width
 - *4 `=1d4` abreast
